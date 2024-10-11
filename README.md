@@ -69,8 +69,8 @@
 ## 联系我们
 - **在本仓库中提 issue（强烈推荐！！！）**
 - **QQ群 995755294**\
-  (进群答案为本仓库地址，即 `github.com/weinibuliu/IdentityV-Tool` )
-- 邮箱 `weinibuliu@outlook.com`
+  (进群答案为本仓库地址，即 `github.com/weinibuliu/IVT_IdentityV-Tool` )
+- **邮箱** `weinibuliu@outlook.com`
 
 ## 支持我们
 - 如果觉得项目有帮助，欢迎为本项目点亮 **Star** ，这是对我们最大的鼓励。
