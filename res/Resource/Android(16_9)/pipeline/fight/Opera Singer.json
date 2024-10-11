@@ -1,0 +1,62 @@
+{
+    "歌剧演员_获取影跃位置": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [
+            180,
+            185,
+            190
+        ],
+        "upper": [
+            190,
+            195,
+            200
+        ],
+        "count": 10,
+        "order_by": "Random",
+        "roi": [
+            1040,
+            415,
+            110,
+            105
+        ],
+        "post_delay": 0
+    },
+    "歌剧演员_获取普攻位置": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [
+            190,
+            200,
+            205
+        ],
+        "upper": [
+            200,
+            210,
+            215
+        ],
+        "count": 10,
+        "order_by": "Random",
+        "roi": [
+            1105,
+            580,
+            110,
+            85
+        ],
+        "post_delay": 0
+    },
+    "歌剧演员_影跃": {
+        "action": "Click",
+        "target": "歌剧演员_获取影跃位置",
+        "post_delay": 100
+    },
+    "歌剧演员_普攻": {
+        "action": "Click",
+        "target": "歌剧演员_获取普攻位置",
+        "post_delay": 100
+    },
+    "歌剧演员_循环": {
+        "action": "Custom",
+        "custom_action": "OS_Round"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "桌面通知": {
+        "action": "Custom",
+        "custom_action": "Desktop_notice"
+    },
+    "邮件通知": {
+        "action": "Custom",
+        "custom_action": "Email_notice"
+    }
+}

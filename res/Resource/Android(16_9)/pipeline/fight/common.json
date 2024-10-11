@@ -1,0 +1,90 @@
+{
+    "基础移动": {
+        "action": "Swipe",
+        "begin": [
+            175,
+            515,
+            10,
+            10
+        ]
+    },
+    "基础视角移动": {
+        "action": "Swipe",
+        "begin": [
+            670,
+            255,
+            10,
+            10
+        ]
+    },
+    "随机移动": {
+        "action": "Custom",
+        "custom_action": "Move"
+    },
+    "随机视角移动": {
+        "action": "Custom",
+        "custom_action": "Vision_Move"
+    },
+    "标准模式点赞": {
+        "recognition": "TemplateMatch",
+        "template": "fight//点赞.png",
+        "roi": [
+            300,
+            490,
+            45,
+            45
+        ],
+        "action": "Click",
+        "target": true,
+        "post_delay": 100,
+        "next": [],
+        "on_error": []
+    },
+    "捉迷藏点赞": {
+        "recognition": "ColorMatch",
+        "lower": [
+            105,
+            105,
+            105
+        ],
+        "upper": [
+            135,
+            135,
+            145
+        ],
+        "conut": 10,
+        "order_by": "Random",
+        "action": "Click",
+        "target": true
+    },
+    "捉迷藏变身": {
+        "timeout": 4000,
+        "recognition": "ColorMatch",
+        "lower": [
+            175,
+            180,
+            190
+        ],
+        "upper": [
+            190,
+            200,
+            200
+        ],
+        "order_by": "Random",
+        "roi": [
+            1180,
+            310,
+            60,
+            60
+        ],
+        "action": "Click",
+        "target": true,
+        "post_delay": 200,
+        "ion_error": [],
+        "next": []
+    },
+    "捉迷藏移动与跳跃": {
+        "action": "Custom",
+        "custom_action": "Hide_Mixed_Move_Jump"
+    }
+}

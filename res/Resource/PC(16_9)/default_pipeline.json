@@ -1,0 +1,10 @@
+{
+    "Default": {
+        "pre_delay": 300,
+        "post_delay": 500,
+        "rate_limit": 1000,
+        "on_error": [
+            "默认异常处理"
+        ]
+    }
+}

@@ -1,0 +1,80 @@
+{
+    "检测地图": {
+        "recognition": "Custom",
+        "custom_recognition": "Get_Map",
+        "custom_recognition_param": {
+            "roi_state": "PC16_9"
+        },
+        "next": [
+            "检测阵营"
+        ]
+    },
+    "检测阵营": {
+        "recognition": "Custom",
+        "custom_recognition": "Get_Player",
+        "next": [
+            "读取禁选信息"
+        ]
+    },
+    "读取禁选信息": {
+        "recognition": "Custom",
+        "custom_recognition": "Get_Ban_Info",
+        "next": [
+            "禁选角色"
+        ]
+    },
+    "禁选角色": {
+        "action": "Custom",
+        "custom_action": "Ban",
+        "next": [
+            "成功禁用"
+        ]
+    },
+    "确认禁用": {
+        "recognition": "OCR",
+        "expected": [
+            "确认禁用"
+        ],
+        "roi": [
+            555,
+            640,
+            120,
+            60
+        ],
+        "action": "Click",
+        "target": true,
+        "post_delay": 800,
+        "next": [
+            "确认禁用_确定"
+        ]
+    },
+    "确认禁用_确定": {
+        "recognition": "OCR",
+        "expected": [
+            "确定"
+        ],
+        "roi": [
+            700,
+            380,
+            120,
+            80
+        ],
+        "pre_delay": 800,
+        "action": "Click",
+        "target": true
+    },
+    "下一页": {
+        "recognition": "TemplateMatch",
+        "template": "ban//下一页.png",
+        "roi": [
+            1000,
+            630,
+            60,
+            35
+        ],
+        "pre_delay": 200,
+        "action": "Click",
+        "target": true
+    },
+    "成功禁用": {}
+}

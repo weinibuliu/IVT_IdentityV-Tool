@@ -1,0 +1,284 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "**"
+    tags:
+      - "v*"
+    paths:
+      - ".github/workflows/**"
+      - "config/**"
+      - "src/**"
+      - "res/**"
+      - "DLLs/**"
+
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - ".github/workflows/**"
+      - "config/**"
+      - "src/**"
+      - "res/**"
+      - "DLLs/**"
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4.2.1
+          with:
+              fetch-depth: 0
+        - id: set
+          run: |
+              is_release=${{ startsWith(github.ref, 'refs/tags/v') }}
+              is_pre_release=${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') || contains(github.ref, '-canary') || contains(github.ref, '-rc') }}
+              commit_hash=$(git rev-parse --short HEAD)
+
+              if $is_release; then
+                tag=$(git describe --tags || true)
+              else
+                tag=$(git describe --tags --match "v*" --exclude "*-post*" || true)
+              fi
+              if [[ $tag != v* ]]; then
+                if $is_release; then echo "::error::Failed to get tag on releasing" && exit 1; fi
+                ver_core=$(curl -sX GET "https://api.github.com/repos/MaaXYZ/MaaFramework/releases/latest" --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | awk '/tag_name/{print $4}' FS='["]' || true)
+                tag=$(date "+$ver_core-1%m%d-${commit_hash}")
+                if [[ $tag != v* ]]; then
+                  tag=$(date "+v%Y.%-m.%-d-2%H%M-${commit_hash}")
+                fi
+              fi
+
+              if $is_release; then
+                version=${tag#v}
+              else
+                ver_core=${tag%-*-*}
+                suffixs=(${tag//-/ })
+                tag=${ver_core}-post.${suffixs[-2]}-ci.${{ github.run_id }}
+                version=${tag#v}+${commit_hash}.$(date +%Y%m%d)
+              fi
+
+              echo "tag=$tag
+              version=$version
+              is_release=$is_release
+              is_pre_release=$is_pre_release" | tee -a "$GITHUB_OUTPUT"
+    outputs:
+        is_release: ${{ steps.set.outputs.is_release }}
+        is_pre_release: ${{ steps.set.outputs.is_pre_release }}
+        tag: ${{ steps.set.outputs.tag }} # v<release version> | v<ci version>
+        version: ${{ steps.set.outputs.version }} # <release version> | <ci version>+<build> e.g
+
+  Windows:
+    needs: meta
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        arch: [aarch64,x86_64]
+      fail-fast: false
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4.2.1
+
+    - name: Download MaaFramework
+      uses: robinraju/release-downloader@v1.11
+      with:
+        repository: MaaXYZ/MaaFramework
+        fileName: "MAA-win-${{ matrix.arch }}*"
+        tag: "v2.1.0"
+        out-file-path: ".\\"
+        extract: true
+
+    - name: Move Res and Deps to install
+      run: |
+        mkdir install
+  
+        move .\res .\install
+        move .\config .\install
+        cp .\README.md .\install
+        cp .\LICENSE .\install
+
+        move .\bin\* .\install\res
+        move .\share\MaaAgentBinary .\install\res
+        del .\install\res\MaaPiCli.exe
+
+    - name: Set up Python
+      uses: actions/setup-python@v5.2.0
+      with:
+        python-version: '3.12'
+
+    - name: Copy DLL to Python Directory (Only Windows Need)
+      run: |
+        cp .\DLLs\msvcp140.dll ${{ env.Python_ROOT_DIR }}
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build Executable
+      run: |
+        python build.py
+        move .\dist\IdentityV-Tool.exe .\install\
+
+    - name: Get Current Commit ID
+      run: |
+        echo $env:GITHUB_SHA > version
+      shell: pwsh
+
+    - name: Upload Assets
+      uses: actions/upload-artifact@v4.4.1
+      with:
+        name: IVT-windows-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}
+        path: |
+          .\install
+
+  Linux:
+      needs: meta
+      runs-on: ubuntu-latest
+      strategy:
+          matrix:
+              arch: [aarch64, x86_64]
+          fail-fast: false
+
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.2.1
+
+      - name: Download MaaFramework
+        uses: robinraju/release-downloader@v1.11
+        with:
+          repository: MaaXYZ/MaaFramework
+          fileName: "MAA-linux-${{ matrix.arch }}*"
+          tag: "v2.1.0"
+          out-file-path: "./"
+          extract: true
+
+      - name: Move Res and Deps to install
+        run: |
+          mkdir install
+
+          mv ./res ./install
+          mv ./config ./install
+          cp ./README.md ./install
+          cp ./LICENSE ./install
+
+          mv ./bin/* ./install/res
+          mv ./share/MaaAgentBinary ./install/res
+          rm ./install/res/MaaPiCli
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.2.0
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Executable
+        run: |
+          python3 build.py
+          mv ./dist/IdentityV-Tool ./install
+
+      - name: Get Current Commit ID
+        run: |
+          echo $env:GITHUB_SHA > version
+        shell: pwsh
+    
+      - name: Upload Assets
+        uses: actions/upload-artifact@v4.4.1
+        with:
+          name: IVT-linux-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}
+          path: |
+            ./install
+
+  Macos:
+    needs: meta
+    strategy:
+      matrix:
+          include:
+              - os: Macos-13
+                arch: x86_64
+              - os: Macos-14
+                arch: aarch64
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4.2.1
+
+    - name: Download MaaFramework
+      uses: robinraju/release-downloader@v1.11
+      with:
+        repository: MaaXYZ/MaaFramework
+        fileName: "MAA-macos-${{ matrix.arch }}*"
+        tag: "v2.1.0"
+        out-file-path: "./"
+        extract: true
+
+    - name: Move Res and Deps to install
+      run: |
+        mkdir install
+
+        mv ./res ./install
+        mv ./config ./install
+        cp ./README.md ./install
+        cp ./LICENSE ./install
+
+        mv ./bin/* ./install/res
+        mv ./share/MaaAgentBinary ./install/res
+        rm ./install/res/MaaPiCli
+
+    - name: Set up Python
+      uses: actions/setup-python@v5.2.0
+      with:
+        python-version: '3.12'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build Executable
+      run: |
+        python3 build.py
+        mv ./dist/IdentityV-Tool ./install
+
+    - name: Get Current Commit ID
+      run: |
+        echo $env:GITHUB_SHA > version
+      shell: pwsh
+  
+    - name: Upload Assets
+      uses: actions/upload-artifact@v4.4.1
+      with:
+        name: IVT-macos-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}
+        path: |
+          ./install
+
+  release:
+    if: ${{ needs.meta.outputs.is_release == 'true' }}
+    needs: [meta, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Assets
+        uses: actions/download-artifact@v4.1.8
+        with:
+          path: assets
+      - run: |
+          cd assets
+          for f in *; do
+            (cd $f && zip -r ../$f.zip .)
+          done
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          files: assets/*
+          tag_name: ${{ needs.meta.outputs.tag }}
+          prerelease: ${{ needs.meta.outputs.is_pre_release == 'true' }}

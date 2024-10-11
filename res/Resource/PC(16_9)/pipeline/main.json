@@ -1,0 +1,123 @@
+{
+    "禁选配置文件校验": {
+        "action": "Custom",
+        "custom_action": "Ban_Config_Check",
+        "next": [
+            "自动准备"
+        ]
+    },
+    "自动准备": {
+        "rate_limit": 2000,
+        "timeout": 25000,
+        "next": [
+            "获取匹配时间位置",
+            "匹配成功"
+        ]
+    },
+    "获取匹配时间位置": {
+        "timeout": 6000,
+        "recognition": "OCR",
+        "expected": [
+            "普通匹配中",
+            "准备",
+            "案件还原",
+            "准备案件还原"
+        ],
+        "post_delay": 3000,
+        "next": [
+            "等待匹配",
+            "匹配成功"
+        ]
+    },
+    "等待匹配": {
+        "recognition": "OCR",
+        "expected": [
+            "普通匹配中"
+        ],
+        "roi": "获取匹配时间位置",
+        "roi_offset": [
+            -10,
+            -10,
+            20,
+            20
+        ],
+        "post_delay": 8000,
+        "next": [
+            "匹配成功",
+            "等待匹配",
+            "匹配位置改变"
+        ]
+    },
+    "匹配位置改变": {
+        "recognition": "OCR",
+        "expected": [
+            "普通匹配中"
+        ],
+        "roi": "获取匹配时间位置",
+        "inverse": true,
+        "next": [
+            "匹配成功",
+            "未匹配成功"
+        ]
+    },
+    "匹配成功": {
+        "recognition": "OCR",
+        "expected": [
+            "准备",
+            "案件还原",
+            "准备案件还原"
+        ],
+        "roi": [
+            400,
+            500,
+            450,
+            200
+        ],
+        "action": "Click",
+        "target": true,
+        "next": [
+            "检测是否进入游戏",
+            "尝试重新获取匹配时间位置"
+        ]
+    },
+    "检测是否进入游戏": {
+        "recognition": "TemplateMatch",
+        "template": "fight//点击书.png",
+        "roi": [
+            1175,
+            490,
+            60,
+            50
+        ],
+        "inverse": true,
+        "next": [
+            "匹配成功_桌面通知"
+        ]
+    },
+    "匹配成功_桌面通知": {
+        "post_delay": 0,
+        "next": [
+            "匹配成功_邮件通知"
+        ]
+    },
+    "匹配成功_邮件通知": {
+        "action": "Custom",
+        "custom_action": "Email_notice",
+        "custom_action_param": {
+            "Title": "匹配成功提醒",
+            "Body": "<p>来车辣！</p>"
+        }
+    },
+    "未匹配成功": {
+        "next": [
+            "尝试重新获取匹配时间位置"
+        ]
+    },
+    "尝试重新获取匹配时间位置": {
+        "next": [
+            "获取匹配时间位置"
+        ],
+        "timeout": 6000,
+        "post_delay": 1000
+    }
+}

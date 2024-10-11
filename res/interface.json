@@ -1,0 +1,80 @@
+{
+    "version": "0.1-beta.1",
+    "message": "\nIVT 是使用 GPLv3 许可证开源的免费软件，感谢所有贡献者的付出。\n访问项目地址以获取源码与最新版本。\n\nIVT is a FREE software using GPLv3 License open source.Thanks for all contributors.\nVisit the project url to get source code or lateset releases.\n\n项目地址/Project url: www.github.com/weinibuliu/IdentityV-Tool\n",
+    "controller": [
+        {
+            "name": "PC 端",
+            "type": "Win32",
+            "win32": {
+                "class_regex": ".*",
+                "window_regex": "第五人格",
+                "screencap": 2,
+                "input": 2
+            }
+        },
+        {
+            "name": "Android 模拟器",
+            "type": "Adb"
+        }
+    ],
+    "resource": [
+        {
+            "name": "PC(16:9)",
+            "path": [
+                "{PROJECT_DIR}/resource/Android(16_9)",
+                "{PROJECT_DIR}/resource/PC(16_9)"
+            ]
+        },
+        {
+            "name": "Android(16:9)",
+            "path": [
+                "{PROJECT_DIR}/resource/PC(16_9)",
+                "{PROJECT_DIR}/resource/Android(16_9)"
+            ]
+        }
+    ],
+    "task": [
+        {
+            "name": "匹配自动准备",
+            "entry": "禁选配置文件校验",
+            "option": [
+                "是否启用桌面通知"
+            ]
+        },
+        {
+            "name": "自动战斗",
+            "entry": "fight_登录后界面检测"
+        }
+    ],
+    "option": {
+        "是否启用桌面通知": {
+            "cases": [
+                {
+                    "name": "是",
+                    "pipeline_override": {
+                        "匹配成功_桌面通知": {
+                            "action": "Custom",
+                            "custom_action": "Desktop_notice",
+                            "custom_action_param": {
+                                "Title": "匹配成功提醒",
+                                "Message": "来车辣！"
+                            }
+                        },
+                        "默认异常处理_桌面通知": {
+                            "action": "Custom",
+                            "custom_action": "Desktop_notice",
+                            "custom_action_param": {
+                                "Title": "异常提醒",
+                                "Message": "运行状态异常，请检查游戏运行状态。"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "否",
+                    "pipeline_override": {}
+                }
+            ]
+        }
+    }
+}

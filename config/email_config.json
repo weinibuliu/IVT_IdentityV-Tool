@@ -1,0 +1,10 @@
+{
+    "是否启用邮件通知": false,
+    "email_config": {
+        "Send_Address": "发件邮箱地址",
+        "Send_Password": "发件邮箱SMTP服务授权码",
+        "SMTP_Address": "SMTP服务器地址",
+        "SMTP_Port": "SMTP服务器端口，类型为整数，请去掉引号",
+        "Receive_Address": "收件邮箱地址"
+    }
+}
