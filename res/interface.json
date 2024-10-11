@@ -1,6 +1,6 @@
 {
     "version": "0.1-beta.1",
-    "message": "\nIVT 是使用 GPLv3 许可证开源的免费软件，感谢所有贡献者的付出。\n访问项目地址以获取源码与最新版本。\n\nIVT is a FREE software using GPLv3 License open source.Thanks for all contributors.\nVisit the project url to get source code or lateset releases.\n\n项目地址/Project url: www.github.com/weinibuliu/IdentityV-Tool\n",
+    "message": "\nIVT 是使用 GPLv3 许可证开源的免费软件，感谢所有贡献者的付出。\n访问项目地址以获取源码与最新版本。\n\nIVT is a FREE software using GPLv3 License open source.Thanks for all contributors.\nVisit the project url to get source code or lateset releases.\n\n项目地址/Project url: www.github.com/weinibuliu/IVT_IdentityV-Tool\n",
     "controller": [
         {
             "name": "PC 端",
