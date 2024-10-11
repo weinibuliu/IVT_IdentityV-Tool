@@ -1,7 +1,8 @@
 #存放战斗中移动、视角移动、点击等信息
 
 from time import sleep
-from random import randint,uniform
+from random import randint,shuffle
+from json import loads
 
 from maa.context import Context
 from maa.custom_action import CustomAction
@@ -66,7 +67,7 @@ class Hide_Mixed_Move_Jump(CustomAction):
             case _:
                 raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
 
-        duration_time = randint(5,8)
+        duration_time = randint(8,10)
         
         i = 0
         ti = 0
@@ -119,5 +120,41 @@ class Hide_Mixed_Move_Jump(CustomAction):
                     break
 
         context.tasker.controller.post_touch_up(contact=0)
+
+        return True
+
+class Thumb_Ups(CustomAction):
+    def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
+        model = loads(argv.custom_action_param)["model_detail"]
+        if model == "标准模式":
+            gamer_list = [1,2,3,4]
+            shuffle(gamer_list)
+            for i in gamer_list:
+                match i:
+                    case 1:
+                        context.override_pipeline({"标准模式点赞":{"roi": [300,490,45,45]}})
+                    case 2:
+                        context.override_pipeline({"标准模式点赞":{"roi": [550,490,45,45]}})
+                    case 3:
+                        context.override_pipeline({"标准模式点赞":{"roi": [805,490,45,45]}})
+                    case 4:
+                        context.override_pipeline({"标准模式点赞":{"roi": [1075,490,45,45]}})
+                    case _:
+                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                context.run_pipeline("标准模式点赞")   
+        elif model == "捉迷藏":
+            gamer_list = [1,2]
+            shuffle(gamer_list)
+            for i in gamer_list:
+                match i:
+                    case 1:
+                        context.override_pipeline({f"{model}点赞":{"roi": [235,170,30,35]}})
+                    case 2:
+                        context.override_pipeline({f"{model}点赞":{"roi": [965,170,30,35]}})
+                    case _:
+                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                context.run_pipeline("捉迷藏点赞") 
+        else:
+            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
 
         return True

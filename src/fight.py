@@ -19,13 +19,14 @@ def rec_name_list() -> list[str]:
 def rec_list() -> list:
     return []
 def act_name_list() -> list[str]:
-    return ["Fight","Move","Vision_Move","Thumb_Ups"] + ["Hide_Mixed_Move_Jump"] + ["OS_Round"]
+    return ["Fight"] + ["Thumb_Ups","Move","Vision_Move","Hide_Mixed_Move_Jump"] + ["OS_Round"]
 def act_list() -> list:
+    Thumb_Ups = common.Thumb_Ups
     Move = common.Move
     Vision_Move = common.Vision_Move
     Hide_Mixed_Move_Jump = common.Hide_Mixed_Move_Jump
     OS_Round = Opera_Singer.OS_Round
-    return [Fight(),Move(),Vision_Move(),Thumb_Ups()] + [Hide_Mixed_Move_Jump()] + [OS_Round()]
+    return [Fight()] + [Thumb_Ups(),Move(),Vision_Move(),Hide_Mixed_Move_Jump()] + [OS_Round()]
 
 def get_roi_base_on_state(roi_state:str):
     match roi_state:
@@ -202,13 +203,15 @@ class Fight(CustomAction):
                         if time_flag != False and real_time >= stop_time:
                             limit_time = False
                             break
-
-                        context.override_pipeline({"fight_等待全体玩家准备": {"next":[f"fight_{model}_等待加载"]}})
+                        if model == "匹配模式" or model == "排位模式":
+                            model_detail = "标准模式"
+                            
+                        context.override_pipeline({"fight_等待全体玩家准备": {"next":[f"fight_{model_detail}_等待加载"]}})
                         
                         if thumbs_up == False:
                             context.override_pipeline({"fight_赛后_继续": {"next": ["fight_赛后_返回大厅"]}})
                         else:
-                            context.override_pipeline({"fight_点赞": {"custom_action_param": {"model": model}}})
+                            context.override_pipeline({"fight_点赞": {"custom_action_param": {"model_detail": model_detail}}})
 
                         ready(model,character)
                         if model == "匹配模式" or model == "排位模式":
@@ -254,42 +257,7 @@ class Fight(CustomAction):
         
         return True
  
-class Thumb_Ups(CustomAction):
-    def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
-        model = loads(argv.custom_action_param)["model"]
-        if model == "匹配模式" or model == "排位模式":
-            gamer_list = [1,2,3,4]
-            shuffle(gamer_list)
-            for i in gamer_list:
-                match i:
-                    case 1:
-                        context.override_pipeline({"标准模式点赞":{"roi": [300,490,45,45]}})
-                    case 2:
-                        context.override_pipeline({"标准模式点赞":{"roi": [550,490,45,45]}})
-                    case 3:
-                        context.override_pipeline({"标准模式点赞":{"roi": [805,490,45,45]}})
-                    case 4:
-                        context.override_pipeline({"标准模式点赞":{"roi": [1075,490,45,45]}})
-                    case _:
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
-                context.run_pipeline("标准模式点赞")   
-        elif model == "捉迷藏":
-            gamer_list = [1,2]
-            shuffle(gamer_list)
-            for i in gamer_list:
-                match i:
-                    case 1:
-                        context.override_pipeline({f"{model}点赞":{"roi": [235,170,30,35]}})
-                    case 2:
-                        context.override_pipeline({f"{model}点赞":{"roi": [965,170,30,35]}})
-                    case _:
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
-                context.run_pipeline("捉迷藏点赞") 
-        else:
-            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
-
-        return True
-
 class Fight_Config_Check(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
+        #TODO:fight_config.json 文件校验
         return True
