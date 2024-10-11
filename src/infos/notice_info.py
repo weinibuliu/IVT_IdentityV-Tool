@@ -9,6 +9,6 @@ class email():
     with_eamil = f'''<p><i>Time: {current_time}</i><br />
     <i>邮件内容由</i><b><a href='https://www.github.com/weinibuliu/IdentityV_Tool'>  IVT  </a></b><i>自动构建。</i><br />
     <i>如有错误，欢迎前往项目反馈。</i></p>'''
-    
+
 class desktop():
     pass

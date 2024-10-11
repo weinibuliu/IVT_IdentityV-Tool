@@ -27,7 +27,7 @@ class Move(CustomAction):
         move(direction,duration)
 
         return True
-    
+
 class Vision_Move(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
         def move(direction:int,duration:int):

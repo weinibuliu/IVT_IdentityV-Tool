@@ -133,11 +133,12 @@ class Fight(CustomAction):
             sleep(0.5)
             context.run_pipeline(f"fight_{model}")
             sleep(0.5)
-            if model == "标准模式":
+            if model == "匹配模式" or model == "排位模式":
                 context.run_pipeline("fight_点击监管者")
                 sleep(0.5)
                 context.run_pipeline("fight_开始匹配")
-                context.run_pipeline("确认禁用",pipeline_override={"确认禁用": {"timeout": 3000}})
+                if model == "排位模式":
+                    context.run_pipeline("确认禁用",pipeline_override={"确认禁用": {"timeout": 3000}})
                 context.override_pipeline({"fight_选择角色":{"template":f"characters//{character}.png"}})
                 context.run_pipeline("fight_切换角色")
             elif model == "捉迷藏":
@@ -201,9 +202,6 @@ class Fight(CustomAction):
                         if time_flag != False and real_time >= stop_time:
                             limit_time = False
                             break
-                        
-                        if model == "匹配模式" or model == "排位模式":
-                            model = "标准模式"
 
                         context.override_pipeline({"fight_等待全体玩家准备": {"next":[f"fight_{model}_等待加载"]}})
                         
@@ -213,7 +211,7 @@ class Fight(CustomAction):
                             context.override_pipeline({"fight_点赞": {"custom_action_param": {"model": model}}})
 
                         ready(model,character)
-                        if model == "标准模式":
+                        if model == "匹配模式" or model == "排位模式":
                             fight_main(character)
                         elif model == "捉迷藏":
                             sleep(2)
@@ -241,7 +239,6 @@ class Fight(CustomAction):
                             context.run_pipeline("fight_检测人品值_打开个人名片")
                             sleep(3.5)
                             reputation_detail = context.run_recognition("fight_检测人品值",context.tasker.controller.post_screencap().wait().get())
-                            print(reputation_detail)
                             if reputation_detail is not None and int(reputation_detail.best_result.text) <= reputation_limit:
                                 reputation_limit = bool(False)
                                 break
@@ -260,19 +257,19 @@ class Fight(CustomAction):
 class Thumb_Ups(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
         model = loads(argv.custom_action_param)["model"]
-        if model == "标准模式":
+        if model == "匹配模式" or model == "排位模式":
             gamer_list = [1,2,3,4]
             shuffle(gamer_list)
             for i in gamer_list:
                 match i:
                     case 1:
-                        context.override_pipeline({f"{model}点赞":{"roi": [300,490,45,45]}})
+                        context.override_pipeline({"标准模式点赞":{"roi": [300,490,45,45]}})
                     case 2:
-                        context.override_pipeline({f"{model}点赞":{"roi": [550,490,45,45]}})
+                        context.override_pipeline({"标准模式点赞":{"roi": [550,490,45,45]}})
                     case 3:
-                        context.override_pipeline({f"{model}点赞":{"roi": [805,490,45,45]}})
+                        context.override_pipeline({"标准模式点赞":{"roi": [805,490,45,45]}})
                     case 4:
-                        context.override_pipeline({f"{model}点赞":{"roi": [1075,490,45,45]}})
+                        context.override_pipeline({"标准模式点赞":{"roi": [1075,490,45,45]}})
                     case _:
                         raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
                 context.run_pipeline("标准模式点赞")   
