@@ -195,7 +195,7 @@ jobs:
           path: |
             ./install
 
-  Macos:
+  MacOS:
     needs: meta
     strategy:
       matrix:
@@ -207,7 +207,6 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os }}
 
-    
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4.2.1
@@ -263,8 +262,9 @@ jobs:
 
   release:
     if: ${{ needs.meta.outputs.is_release == 'true' }}
-    needs: [meta, windows]
+    needs: [meta, Windows, Linux, MacOS]
     runs-on: ubuntu-latest
+    
     steps:
       - name: Download Assets
         uses: actions/download-artifact@v4.1.8

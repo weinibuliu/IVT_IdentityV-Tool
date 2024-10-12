@@ -88,7 +88,7 @@
 - **[MaaFramework](https://github.com/MaaXYZ/MaaFramework)**\
 基于图像识别的自动化黑盒测试框架。
 
-- **[Plyer](https://github.com/kivy/plyer)**\
+- **[plyer](https://github.com/kivy/plyer)**\
   a platform-independent Python API for accessing hardware features of various platforms (Android, iOS, macOS, Linux and Windows).
 
 - **[pyinstaller](https://github.com/pyinstaller/pyinstaller)**\
