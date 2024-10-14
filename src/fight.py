@@ -329,4 +329,4 @@ class Fight_Config_Check(CustomAction):
         if statu == False:
             raise ValueError(f"Auto-Fight-Setting is not work corretly.")
 
-        return statu
+        return bool(statu)
