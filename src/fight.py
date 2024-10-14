@@ -11,6 +11,7 @@ from maa.custom_action import CustomAction
 from .infos import base_roi
 from .infos import common
 from .infos import Opera_Singer
+from .infos import fight_info
 
 #获取路径
 main_path = Path.cwd()
@@ -261,5 +262,71 @@ class Fight(CustomAction):
 
 class Fight_Config_Check(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
+        statu = False
 
-        return False
+        config_path = f"{main_path}/config/fight_config.json"
+        with open(config_path,"r",encoding="utf-8") as f:
+            data = dict(load(f))
+
+        fight_enable = data["是否启用自动战斗"]
+
+        if fight_enable == True:
+            statu = True
+
+            #检查基础设置
+            base_setting = dict(data["基础设置"])
+            model_list = list(base_setting["模式队列"])
+            raw_model_list = fight_info.model_list
+            character_list = list(base_setting["角色队列"])
+            raw_character_list = fight_info.character_list
+
+            li_name = ["模式队列","角色队列"]
+            li = [model_list,character_list]
+            raw_list = raw_model_list,raw_character_list
+
+            for l_name,l,raw_list in zip(li_name,li,raw_list):
+                if all(item in l for item in raw_list):
+                    pass
+                else:
+                    statu = False
+                    raise ValueError(f"{l_name} is error.")
+
+            #检查停止相关设置
+            stop_setting = dict(data["停止相关设置"])
+            weekly = stop_setting["启用周上限限制"]
+            reputation = stop_setting["最低人品值"]
+            limit_time = stop_setting["限制时间"]
+            limit_times = stop_setting["限制次数"]
+
+            value_name_list = ["启用周上限限制","最低人品值","限制时间","限制对局次数"]
+            value_list = [weekly,reputation,limit_time,limit_times]
+            type_list = [bool,int,[int,float],int]
+
+            for v_name,v,v_type in zip(value_name_list,value_list,type_list):
+                if type(v) not in list(v_type):
+                    statu = False
+                    raise ValueError(f"{v_name} is error.")
+
+            #检查检测频率设置
+            check_setting = dict(data["检测频率设置"])
+            weekly_rate = check_setting["检测周上限频率"]
+            reputation_rate = check_setting["检测人品值频率"]
+
+            value_name = ["检测周上限频率","检测人品值频率"]
+            value = [weekly_rate,reputation_rate]
+
+            for v_name,v in zip(value_name,value):
+                if type(v) != int:
+                    statu = False
+                    raise ValueError(f"{v_name} is error.")
+
+        elif fight_enable == False:
+            pass
+        else:
+            statu = False
+            raise ValueError(f"Unexpected Value Error!\nPlease check {config_path} .")
+
+        if statu == False:
+            raise ValueError(f"Auto-Fight-Setting is not work corretly.")
+
+        return statu
