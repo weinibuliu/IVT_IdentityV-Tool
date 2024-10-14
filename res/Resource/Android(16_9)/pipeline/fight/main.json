@@ -1,11 +1,4 @@
 {
-    "fight_Start": {
-        "action": "Custom",
-        "custom_action": "Fight_Config_Check",
-        "next": [
-            "fight_登录后界面检测"
-        ]
-    },
     "fight_登录后界面检测": {
         "timeout": 15000,
         "next": [

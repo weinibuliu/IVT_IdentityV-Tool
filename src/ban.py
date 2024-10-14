@@ -32,12 +32,12 @@ def get_roi_base_on_state(roi_state:str):
             roi = base_roi.Android16_9
         case _:
             raise ValueError("roi 声明参数异常，请联系开发者。")
-
+        
     return roi
 
 def get_location_roi(side:str,location:int|str,roi_state:str) -> list[int]:
     roi = get_roi_base_on_state(roi_state)
-
+    
     side = str(side)
     location = str(location)
 
@@ -49,7 +49,7 @@ class Get_Map(CustomRecognition):
     def analyze(self, context: Context, argv: CustomRecognition.AnalyzeArg) -> CustomRecognition.AnalyzeResult:
         roi_state = loads(argv.custom_recognition_param)["roi_state"]
         roi = get_roi_base_on_state(roi_state)
-
+        
         Getmap_pipe = {"Get_map":{
                     "timeout": 3000,
                     "recognition": "OCR",
@@ -59,24 +59,24 @@ class Get_Map(CustomRecognition):
                     "replace": [["车","军"],["利","村"],["有","月"],["量","里"],["水","永"],["入","人"],["性","归"],["M","林"],
                                 ["【",""],["】",""],["\\[",""],["\\]",""]]
                     }}
-
+        
         rec_result = context.run_recognition("Get_map",argv.image,pipeline_override = Getmap_pipe)
         rec_result = rec_result.best_result.text
-
+       
         #对特定识别结果的处理
         if rec_result == "军工":
             rec_result = "军工厂"
-
+            
         print(f"地图：{rec_result}")
         context.override_pipeline({"检测阵营":{"custom_recognition_param": {"roi_state": roi_state,"map_info": rec_result}}})
 
         return CustomRecognition.AnalyzeResult(box=(),detail="")
-
+    
 class Get_Player(CustomRecognition):
     def analyze(self, context: Context, argv: CustomRecognition.AnalyzeArg) -> CustomRecognition.AnalyzeResult:
         map_info = loads(argv.custom_recognition_param)["map_info"]
         roi_state = loads(argv.custom_recognition_param)["roi_state"]
-
+        
         roi = get_roi_base_on_state(roi_state)
         Getplayer_pipe = {"Get_player":{
                         "recognition": "OCR",
@@ -86,15 +86,15 @@ class Get_Player(CustomRecognition):
         rec_result = context.run_recognition("Get_player",argv.image,pipeline_override = Getplayer_pipe)
         player_info = rec_result.best_result.text
         print(f"禁选阵营：{player_info}")
-
+        
         context.override_pipeline({"读取禁选信息":{"custom_recognition_param": {"roi_state": roi_state,"map_info": map_info,"player_info": player_info}}})
-
+        
         return CustomRecognition.AnalyzeResult(box=(),detail="")
-
+    
 
 class Get_Ban_Info(CustomRecognition):
     def analyze(self, context: Context, argv: CustomRecognition.AnalyzeArg) -> CustomRecognition.AnalyzeResult:
-
+        
         infos = loads(argv.custom_recognition_param)
         roi_state = infos["roi_state"]
         map_info = infos["map_info"]
@@ -102,7 +102,7 @@ class Get_Ban_Info(CustomRecognition):
 
         with open (f"{main_path}/config/ban_config.json","r",encoding="utf-8") as f:
             data = load(f)[player_info]
-
+ 
             ban_details = data[map_info]
             ban1 = ban_details["ban1"]
             ban2 = ban_details["ban2"]
@@ -135,9 +135,7 @@ class Ban_Config_Check(CustomAction):
 
         with open(config_path,"r",encoding="utf-8") as f:
             data = dict(load(f))
-
-        ban_enable = bool(data["是否启用自动禁选"])
-
+            ban_enable = bool(data["是否启用自动禁选"])
         if ban_enable == True:
             #检测阵营完整性
             data_keys = data.keys()
@@ -175,14 +173,14 @@ class Ban_Config_Check(CustomAction):
             for m in h_maps_list:
                 if m not in maps_list:
                     h_error_maps_list.append(m)
-
+            
             if s_error_maps_list != [] and h_error_maps_list != []:
                 raise(f"Unexpected Map Error in Survivors and Hunters:{error_key_list} .\nPlease check {config_path} .")
             elif s_error_maps_list != []:
                 raise(f"Unexpected Map Error in Survivors:{error_key_list} . \nPlease check {config_path} .")
             elif h_error_maps_list !=[]:
                 raise(f"Unexpected Map Error in Hunters:{error_key_list} . \nPlease check {config_path} .")
-
+            
             #检测角色配置
             error = {}
             for m in s_maps_list: #求生者部分
@@ -211,7 +209,7 @@ class Ban_Config_Check(CustomAction):
                     error = {f"{m}":{"Ban1":ban1}}
                 elif ban2 not in h_list:
                     error = {f"{m}":{"Ban2":ban2}}
-
+                
                 if error !={}:
                     h_error_characters_dict.update(error)
                     error = {}
@@ -226,12 +224,6 @@ class Ban_Config_Check(CustomAction):
             print("禁选配置文件校验成功")
             context.override_pipeline({"匹配成功_邮件通知": {"next": ["检测地图状态"]}})
 
-        elif ban_enable == False:
-            pass
-
-        else:
-            raise ValueError(f"Unexpected value Error!\nHunters:{h_error_characters_dict}\nPlease check {config_path} .")
-
         return True
 
 class Ban(CustomAction):
@@ -239,7 +231,7 @@ class Ban(CustomAction):
         infos = loads(argv.custom_action_param)
         ban_details = infos["ban_details"]
         roi_state = infos["roi_state"]
-
+        
         if len(ban_details) == 1:
             ban1 = ban_details[0]
             ban1_details = ban_info.ban_information[ban1]
@@ -248,7 +240,7 @@ class Ban(CustomAction):
             ban1_side = ban1_details["page_side"]
             ban1_locaion = str(ban1_details["page_location"])
             ban1_roi = get_location_roi(ban1_side,ban1_locaion,roi_state)
-
+            
             print(f"禁选信息：{ban1}")
             match ban1_page - 1:
                 case 0:
@@ -297,21 +289,21 @@ class Ban(CustomAction):
             ban2_side = ban2_details["page_side"]
             ban1_locaion = ban1_details["page_location"]
             ban2_locaion = ban2_details["page_location"]
-
+ 
             #处理角色顺序问题
             if ban1_page > ban2_page:
                 ban1_details,ban2_details = ban2_details,ban1_details
                 ban1,ban2 = ban2,ban1
                 ban1_page = ban1_details["page"]
                 ban2_page = ban2_details["page"]
-
+                
             if ban1_page == ban2_page and ban1_side == ban2_side and ban1_locaion > ban2_locaion:
                 ban1_details,ban2_details = ban2_details,ban1_details
                 ban1,ban2 = ban2,ban1
                 ban1_page = ban1_details["page"]
                 ban2_page = ban2_details["page"]
             print(f"禁选信息：{ban1} + {ban2}")
-
+            
             #禁用第一名角色
             match ban1_page - 1:
                 case 0:
@@ -365,18 +357,18 @@ class Ban(CustomAction):
                     context.run_pipeline("下一页")
                 case _:
                     raise ValueError("角色配置文件异常，请联系开发者。")
-
+                
             #获取 ban2 roi
             ban2_side = ban2_details["page_side"]
             ban2_locaion = str(ban2_details["page_location"])
             ban2_roi = get_location_roi(ban2_side,ban2_locaion,roi_state)
-
+              
             context.override_pipeline({"Ban2":{
                                     "recognition": "TemplateMatch",
                                     "template": f"characters//{ban2}.png",
                                     "roi": ban2_roi,
                                     "action": "Click"}})
-            context.run_pipeline("Ban2")
+            context.run_pipeline("Ban2")       
             context.run_pipeline("确认禁用")
 
         else:

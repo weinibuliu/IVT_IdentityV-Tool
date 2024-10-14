@@ -43,7 +43,7 @@
         },
         {
             "name": "自动战斗",
-            "entry": "fight_Start"
+            "entry": "fight_登录后界面检测"
         }
     ],
     "option": {

@@ -31,7 +31,7 @@ class Desktop_notice(CustomAction):
         message = infos["Message"]
 
         notification.notify(title = title,message = message,timeout = 8)
-
+        
         return True
 
 class Email_notice(CustomAction):
@@ -53,7 +53,7 @@ class Email_notice(CustomAction):
 
             smtp_address = str(email_config["SMTP_Address"])
             smtp_port = int(email_config["SMTP_Port"])
-
+                
             doctype = notice_info.email.doctype
             with_eamil = notice_info.email.with_eamil
 

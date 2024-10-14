@@ -43,7 +43,7 @@ class Vision_Move(CustomAction):
 
         direction = randint(0,1)
         move(direction,1000)
-
+        
         return True
 
 class Hide_Mixed_Move_Jump(CustomAction):
@@ -68,7 +68,7 @@ class Hide_Mixed_Move_Jump(CustomAction):
                 raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
 
         duration_time = randint(8,10)
-
+        
         i = 0
         ti = 0
         click_x = randint(1125,1195)
@@ -140,13 +140,8 @@ class Thumb_Ups(CustomAction):
                     case 4:
                         context.override_pipeline({"标准模式点赞":{"roi": [1075,490,45,45]}})
                     case _:
-<<<<<<< Updated upstream
                         raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
                 context.run_pipeline("标准模式点赞")   
-=======
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Thumb_ups Error")
-                context.run_pipeline("标准模式点赞")
->>>>>>> Stashed changes
         elif model == "捉迷藏":
             gamer_list = [1,2]
             shuffle(gamer_list)
@@ -157,13 +152,8 @@ class Thumb_Ups(CustomAction):
                     case 2:
                         context.override_pipeline({f"{model}点赞":{"roi": [965,170,30,35]}})
                     case _:
-<<<<<<< Updated upstream
                         raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
                 context.run_pipeline("捉迷藏点赞") 
-=======
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Thumb_ups Error")
-                context.run_pipeline("捉迷藏点赞")
->>>>>>> Stashed changes
         else:
             raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
 
