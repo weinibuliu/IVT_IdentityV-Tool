@@ -20,7 +20,7 @@ class Move(CustomAction):
                 case 3: #向左移动
                     context.override_pipeline({"基础移动":{"end": [75,515,10,10], "duration": duration}})
                 case _:
-                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Move Error")
             context.run_pipeline("基础移动")
 
         direction = randint(0,3)
@@ -38,7 +38,7 @@ class Vision_Move(CustomAction):
                 case 1 : #向右移动视角
                     context.override_pipeline({"基础视角移动":{"end": [970,255,10,10], "duration": duration}})
                 case _:
-                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Vision Move Error")
             context.run_pipeline("基础视角移动")
 
         direction = randint(0,1)
@@ -65,7 +65,7 @@ class Hide_Mixed_Move_Jump(CustomAction):
                 stop_x = 75
                 stop_y = 515
             case _:
-                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Move and Jump Error")
 
         duration_time = randint(8,10)
         
@@ -140,7 +140,7 @@ class Thumb_Ups(CustomAction):
                     case 4:
                         context.override_pipeline({"标准模式点赞":{"roi": [1075,490,45,45]}})
                     case _:
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Thumb_ups Error")
                 context.run_pipeline("标准模式点赞")   
         elif model == "捉迷藏":
             gamer_list = [1,2]
@@ -152,9 +152,9 @@ class Thumb_Ups(CustomAction):
                     case 2:
                         context.override_pipeline({f"{model}点赞":{"roi": [965,170,30,35]}})
                     case _:
-                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                        raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Thumb_ups Error")
                 context.run_pipeline("捉迷藏点赞") 
         else:
-            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Model Error")
 
         return True

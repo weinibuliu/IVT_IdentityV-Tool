@@ -104,7 +104,7 @@ class Fight(CustomAction):
                         context.run_pipeline("随机视角移动")
 
                 case _:
-                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                    raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Character Error")
                 
             if time_diff >= 235:
                 context.run_pipeline("fight_打开设置")
@@ -147,7 +147,7 @@ class Fight(CustomAction):
             elif model == "捉迷藏":
                 context.run_pipeline("fight_准备开始")
             else:
-                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Model Error")
 
         def main(desktop_notice:bool=desktop_notice,email_notice:bool=email_notice,
                  model_list:list=model_list,model_list_random:bool=model_list_random,
@@ -176,7 +176,7 @@ class Fight(CustomAction):
                 limit_time = round(limit_time,1)
                 stop_time = int(current_time + limit_time*60*60)
             else:
-                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Stoptime Error")
 
             if limit_times == False:
                 limit_times = int(-1) #-1 始终为 true  while 循环不会因此中断
@@ -222,7 +222,7 @@ class Fight(CustomAction):
                             sleep(2)
                             hide_main()
                         else:
-                            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.")
+                            raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Model Error")
 
                         real_time = int(time())
                         fight_times_weekly += 1
