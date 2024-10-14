@@ -21,14 +21,14 @@ def rec_name_list() -> list[str]:
 def rec_list() -> list:
     return []
 def act_name_list() -> list[str]:
-    return ["Fight"] + ["Thumb_Ups","Move","Vision_Move","Hide_Mixed_Move_Jump"] + ["OS_Round"]
+    return ["Fight","Fight_Config_Check"] + ["Thumb_Ups","Move","Vision_Move","Hide_Mixed_Move_Jump"] + ["OS_Round"]
 def act_list() -> list:
     Thumb_Ups = common.Thumb_Ups
     Move = common.Move
     Vision_Move = common.Vision_Move
     Hide_Mixed_Move_Jump = common.Hide_Mixed_Move_Jump
     OS_Round = Opera_Singer.OS_Round
-    return [Fight()] + [Thumb_Ups(),Move(),Vision_Move(),Hide_Mixed_Move_Jump()] + [OS_Round()]
+    return [Fight(),Fight_Config_Check()] + [Thumb_Ups(),Move(),Vision_Move(),Hide_Mixed_Move_Jump()] + [OS_Round()]
 
 def get_roi_base_on_state(roi_state:str):
     match roi_state:

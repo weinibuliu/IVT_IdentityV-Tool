@@ -35,6 +35,10 @@
     ],
     "task": [
         {
+            "name": "测试",
+            "entry": "Test"
+        },
+        {
             "name": "匹配自动准备",
             "entry": "禁选配置文件校验",
             "option": [
