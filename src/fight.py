@@ -326,7 +326,4 @@ class Fight_Config_Check(CustomAction):
             statu = False
             raise ValueError(f"Unexpected Value Error!\nPlease check {config_path} .")
 
-        if statu == False:
-            raise ValueError("Auto-Fight-Setting is not work corretly.")
-
         return bool(statu)
