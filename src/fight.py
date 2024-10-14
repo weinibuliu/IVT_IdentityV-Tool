@@ -261,11 +261,14 @@ class Fight(CustomAction):
 
 class Fight_Config_Check(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
+        statu = True
+
         config_path = f"{main_path}/config/fight_config.json"
         with open(config_path,"r",encoding="utf-8") as f:
             data = dict(load(f))
         print("Fight_Config_Check")
         fight_enable = data["是否启用自动战斗"]
+
         if fight_enable == True:
             #检查基础设置
             base_setting = dict(data["基础设置"])
@@ -277,7 +280,7 @@ class Fight_Config_Check(CustomAction):
                 if key not in base_setting_list:
                     error_key_list.append(key)
             if error_key_list != []:
-                context.tasker.post_stop()
+                statu = False
                 raise ValueError(f"Unexpected Keys Error!\n{error_key_list},please check {config_path} .")
             #检查停止相关设置
             stop_setting = dict(data["停止相关设置"])
@@ -289,7 +292,7 @@ class Fight_Config_Check(CustomAction):
                 if key not in stop_setting_list:
                     error_key_list.append(key)
             if error_key_list != []:
-                context.tasker.post_stop()
+                statu = False
                 raise ValueError(f"Unexpected Keys Error!\n{error_key_list},please check {config_path} .")
             #检查检测频率设置
             check_setting = dict(data["检测频率设置"])
@@ -301,11 +304,11 @@ class Fight_Config_Check(CustomAction):
                 if key not in check_setting_list:
                     error_key_list.append(key)
             if error_key_list != []:
-                context.tasker.post_stop()
+                statu = False
                 raise ValueError(f"Unexpected Keys Error!\n{error_key_list},please check {config_path} .")
         elif fight_enable == False:
             pass
         else:
-            context.tasker.post_stop()
+            statu = False
             raise ValueError(f"Unexpected Value Error!\nPlease check {config_path} .")
-        return True
+        return statu
