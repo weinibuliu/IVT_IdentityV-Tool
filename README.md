@@ -62,7 +62,7 @@
   - [ ] 角色日活动通知
 - **IVT 本体**
   - [ ] 完善 文件校验机制
-  - [ ] 新增 GUI
+  - [ ] 提供 GUI
 
 </details>
 
@@ -75,7 +75,7 @@
 ## 支持我们
 - 如果觉得项目有帮助，欢迎为本项目点亮 **Star** ，这是对我们最大的鼓励。
 - 欢迎向本项目提交 **PR** ！ ~~（虽然我可能看不懂orz）~~ 详阅 **[开发文档](docs/zh-cn/Bulid/开发文档.md)** 。
-- **项目目前正在计划使用 PyQT 开发 GUI，如您愿意提供帮助，欢迎 [联系我们](#联系我们) 。**
+- 项目目前正在计划使用 PyQt6 开发 GUI，如您愿意提供帮助，欢迎 **[联系我们](#联系我们) 。**
 
 ## 许可证
 **IVT 使用 [GPL-3.0](./LICENSE) 许可证进行开源。**
@@ -96,8 +96,8 @@
 
 ### 开发者
 感谢所有为 **IVT** 做出贡献的开发者：\
-<a href="https://github.com/weinibuliu/IdentityV-Tool/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=weinibuliu/IdentityV-Tool&max=1000" />
+<a href="https://github.com/weinibuliu/IVT_IdentityV-Tool/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=weinibuliu/IVT_IdentityV-Tool&max=1000" />
 </a>
 
 ### 项目 Logo 绘制

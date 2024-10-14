@@ -1,7 +1,7 @@
 #存放禁选页面的角色信息
-#page 角色所在页数
-#page_side 角色所在左右方位
-#page_location 角色九宫格位置（从左往右）
+#page：角色所在页数
+#page_side：角色所在左右方位
+#page_location：角色九宫格位置（从左往右）
 
 ban_information = {
     "医生": {
