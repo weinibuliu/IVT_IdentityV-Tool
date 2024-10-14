@@ -38,7 +38,7 @@ def get_roi_base_on_state(roi_state:str):
             roi = base_roi.Android16_9
         case _:
             raise ValueError("roi 声明参数异常，请联系开发者。")
-        
+
     return roi
 
 class Fight(CustomAction):
@@ -47,7 +47,7 @@ class Fight(CustomAction):
         character_list = "歌剧演员"
         with open(f"{main_path}/config/fight_config.json","r",encoding="utf-8") as f:
             data = load(f)
-            
+
         base_options = data["基础设置"]
         character_list = list(base_options["角色队列"])
         character_list_random = bool(base_options["角色队列乱序"])
@@ -62,7 +62,7 @@ class Fight(CustomAction):
         reputation_limit = stop_options["最低人品值"] #bool and int
         limit_time = stop_options["限制时间"] #bool,int,float
         limit_times = stop_options["限制对局次数"] #bool and int
-        
+
         check_options = data["检测频率设置"]
         check_reputation_rate = check_options["检测人品值频率"]
         check_weely_rate = check_options["检测周上限频率"]
@@ -71,7 +71,7 @@ class Fight(CustomAction):
 
         if reputation_limit < 0 or reputation_limit > 100:
             reputation_limit = int(100)
- 
+
         def fight_main(character:str):
             fight_start_time = time()
             time_diff = 0
@@ -105,7 +105,7 @@ class Fight(CustomAction):
 
                 case _:
                     raise ValueError(f"Class Error:{__class__.__name__},please contact to the developers.\nDetasils:Character Error")
-                
+
             if time_diff >= 235:
                 context.run_pipeline("fight_打开设置")
 
@@ -115,7 +115,7 @@ class Fight(CustomAction):
         def hide_main():
             context.run_pipeline("捉迷藏变身")
             task_statu = None
-            
+
             while task_statu is None and task_statu != "继续":
                 context.run_pipeline("随机视角移动")
                 context.run_pipeline("捉迷藏移动与跳跃")
@@ -207,9 +207,9 @@ class Fight(CustomAction):
                             break
                         if model == "匹配模式" or model == "排位模式":
                             model_detail = "标准模式"
-                            
+
                         context.override_pipeline({"fight_等待全体玩家准备": {"next":[f"fight_{model_detail}_等待加载"]}})
-                        
+
                         if thumbs_up == False:
                             context.override_pipeline({"fight_赛后_继续": {"next": ["fight_赛后_返回大厅"]}})
                         else:
@@ -228,7 +228,7 @@ class Fight(CustomAction):
                         fight_times_weekly += 1
                         fight_times_reputation += 1
                         limit_times -= 1
-                        
+
                         if weekly_flag != False and fight_times_weekly == check_weely_rate:
                             fight_times_weekly = int(0)
                             context.run_pipeline("fight_检测周上限_打开推理之径")
@@ -256,10 +256,10 @@ class Fight(CustomAction):
                 context.run_pipeline("邮件通知",pipeline_override={"邮件通知": {"custom_action_param": {"Title": "任务结束提醒","Body": "<p><b>本次任务已运行结束。</b></p>"}}})
 
         main()
-        
+
         return True
- 
+
 class Fight_Config_Check(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
-        #TODO:fight_config.json 文件校验
-        return True
+
+        return False
