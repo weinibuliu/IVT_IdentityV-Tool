@@ -24,11 +24,13 @@ class PC16_9:
         Page_R_9 = [885,465,155,155]
 
         roi_location = {"Left":{"1":Page_L_1,"2":Page_L_2,"3":Page_L_3,"4":Page_L_4,"5":Page_L_5,"6":Page_L_6,"7":Page_L_7,"8":Page_L_8,"9":Page_L_9},
-                "Right":{"1":Page_R_1,"2":Page_R_2,"3":Page_R_3,"4":Page_R_4,"5":Page_R_5,"6":Page_R_6,"7":Page_R_7,"8":Page_R_8,"9":Page_R_9}}
+                        "Right":{"1":Page_R_1,"2":Page_R_2,"3":Page_R_3,"4":Page_R_4,"5":Page_R_5,"6":Page_R_6,"7":Page_R_7,"8":Page_R_8,"9":Page_R_9}}
         
         roi_getmap = [70,80,120,25]
         roi_getplayer = [250,45,100,40]
+
         roi_getreputation = [0,0,0,0]
+        roi_getweekly = [0,0,0,0]
         
 class Android16_9:
         Page_L_1 = [235,140,150,150] 
@@ -52,7 +54,7 @@ class Android16_9:
         Page_R_9 = [925,460,150,150]
 
         roi_location = {"Left":{"1":Page_L_1,"2":Page_L_2,"3":Page_L_3,"4":Page_L_4,"5":Page_L_5,"6":Page_L_6,"7":Page_L_7,"8":Page_L_8,"9":Page_L_9},
-                "Right":{"1":Page_R_1,"2":Page_R_2,"3":Page_R_3,"4":Page_R_4,"5":Page_R_5,"6":Page_R_6,"7":Page_R_7,"8":Page_R_8,"9":Page_R_9}}
+                        "Right":{"1":Page_R_1,"2":Page_R_2,"3":Page_R_3,"4":Page_R_4,"5":Page_R_5,"6":Page_R_6,"7":Page_R_7,"8":Page_R_8,"9":Page_R_9}}
         
         roi_getmap = [75,45,120,40]
         roi_getplayer = [270,10,90,40]

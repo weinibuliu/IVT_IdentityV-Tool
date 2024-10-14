@@ -144,7 +144,7 @@ class Ban_Config_Check(CustomAction):
                 if key != "求生者" and key != "监管者":
                     error_key_list.append(key)
             if error_key_list != []:
-                raise ValueError(f"Unexpected Key Error!\n{error_key_list},please check {config_path} .")
+                raise ValueError(f"Unexpected Keys Error!\n{error_key_list},please check {config_path} .")
 
             maps_list = ban_info.ban_config_check.map_list
             s_list = ban_info.ban_config_check.survivors_list
