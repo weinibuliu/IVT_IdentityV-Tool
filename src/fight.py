@@ -264,13 +264,14 @@ class Fight_Config_Check(CustomAction):
         config_path = f"{main_path}/config/fight_config.json"
         with open(config_path,"r",encoding="utf-8") as f:
             data = dict(load(f))
-
+        print("Fight_Config_Check")
         fight_enable = data["是否启用自动战斗"]
         if fight_enable == True:
             #检查基础设置
             base_setting = dict(data["基础设置"])
             base_setting_keys = base_setting.keys()
             base_setting_list = ["模式队列","模式队列乱序","角色队列","角色队列乱序","启用赛后点赞","启用桌面通知","启用邮件通知"]
+
             error_key_list = []
             for key in base_setting_keys:
                 if key not in base_setting_list:
@@ -282,6 +283,7 @@ class Fight_Config_Check(CustomAction):
             stop_setting = dict(data["停止相关设置"])
             stop_setting_keys = stop_setting.keys()
             stop_setting_list = ["启用周上限设置","最低人品值","限制时间","限制对局次数"]
+
             error_key_list = []
             for key in stop_setting_keys:
                 if key not in stop_setting_list:
@@ -293,6 +295,7 @@ class Fight_Config_Check(CustomAction):
             check_setting = dict(data["检测频率设置"])
             check_setting_keys = check_setting.keys()
             check_setting_list = ["检测周上限频率","检测人品值频率"]
+
             error_key_list = []
             for key in check_setting_keys:
                 if key not in check_setting_list:
