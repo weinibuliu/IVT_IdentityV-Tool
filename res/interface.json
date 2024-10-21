@@ -21,15 +21,15 @@
         {
             "name": "PC(16:9)",
             "path": [
-                "{PROJECT_DIR}/resource/Android(16_9)",
-                "{PROJECT_DIR}/resource/PC(16_9)"
+                "{PROJECT_DIR}/Resource/Android(16_9)",
+                "{PROJECT_DIR}/Resource/PC(16_9)"
             ]
         },
         {
             "name": "Android(16:9)",
             "path": [
-                "{PROJECT_DIR}/resource/PC(16_9)",
-                "{PROJECT_DIR}/resource/Android(16_9)"
+                "{PROJECT_DIR}/Resource/PC(16_9)",
+                "{PROJECT_DIR}/Resource/Android(16_9)"
             ]
         }
     ],
