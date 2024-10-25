@@ -43,7 +43,7 @@ jobs:
               fi
               if [[ $tag != v* ]]; then
                 if $is_release; then echo "::error::Failed to get tag on releasing" && exit 1; fi
-                ver_core=$(curl -sX GET "https://api.github.com/repos/MaaXYZ/MaaFramework/releases/latest" --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | awk '/tag_name/{print $4}' FS='["]' || true)
+                ver_core=$(curl -sX GET "https://api.github.com/repos/weinibuliu/IVT_IdentityV-Tool/releases/latest" --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | awk '/tag_name/{print $4}' FS='["]' || true)
                 tag=$(date "+$ver_core-1%m%d-${commit_hash}")
                 if [[ $tag != v* ]]; then
                   tag=$(date "+v%Y.%-m.%-d-2%H%M-${commit_hash}")
@@ -76,24 +76,15 @@ jobs:
       matrix:
         arch: [aarch64,x86_64]
       fail-fast: false
-    
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4.2.1
 
-    - name: Download MaaFramework
-      uses: robinraju/release-downloader@v1.11
-      with:
-        repository: MaaXYZ/MaaFramework
-        fileName: "MAA-win-${{ matrix.arch }}*"
-        tag: "v2.1.0"
-        out-file-path: ".\\"
-        extract: true
-
     - name: Move Res and Deps to install
       run: |
         mkdir install
-  
+
         move .\res .\install
         move .\config .\install
         cp .\README.md .\install
@@ -187,7 +178,7 @@ jobs:
         run: |
           echo $env:GITHUB_SHA > version
         shell: pwsh
-    
+
       - name: Upload Assets
         uses: actions/upload-artifact@v4.4.1
         with:
@@ -252,7 +243,7 @@ jobs:
       run: |
         echo $env:GITHUB_SHA > version
       shell: pwsh
-  
+
     - name: Upload Assets
       uses: actions/upload-artifact@v4.4.1
       with:
@@ -264,7 +255,7 @@ jobs:
     if: ${{ needs.meta.outputs.is_release == 'true' }}
     needs: [meta, Windows, Linux, MacOS]
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Download Assets
         uses: actions/download-artifact@v4.1.8
