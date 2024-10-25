@@ -31,7 +31,7 @@ def main():
         Toolkit.pi_register_custom_action(name, detail)
 
     # 启动 MaaPiCli
-    Toolkit.pi_run_cli(f"{main_path}/res", f"{main_path}/debug", False)
+    Toolkit.pi_run_cli(f"{main_path}/res", f"{main_path}/cache", False)
 
 
 if __name__ == "__main__":

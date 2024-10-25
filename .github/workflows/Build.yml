@@ -90,10 +90,6 @@ jobs:
         cp .\README.md .\install
         cp .\LICENSE .\install
 
-        move .\bin\* .\install\res
-        move .\share\MaaAgentBinary .\install\res
-        del .\install\res\MaaPiCli.exe
-
     - name: Set up Python
       uses: actions/setup-python@v5.2.0
       with:
@@ -155,10 +151,6 @@ jobs:
           cp ./README.md ./install
           cp ./LICENSE ./install
 
-          mv ./bin/* ./install/res
-          mv ./share/MaaAgentBinary ./install/res
-          rm ./install/res/MaaPiCli
-
       - name: Set up Python
         uses: actions/setup-python@v5.2.0
         with:
@@ -219,10 +211,6 @@ jobs:
         mv ./config ./install
         cp ./README.md ./install
         cp ./LICENSE ./install
-
-        mv ./bin/* ./install/res
-        mv ./share/MaaAgentBinary ./install/res
-        rm ./install/res/MaaPiCli
 
     - name: Set up Python
       uses: actions/setup-python@v5.2.0
