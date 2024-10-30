@@ -81,6 +81,15 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4.2.1
 
+    - name: Download MaaFramework
+      uses: robinraju/release-downloader@v1.11
+      with:
+        repository: MaaXYZ/MaaFramework
+        fileName: "MAA-linux-${{ matrix.arch }}*"
+        tag: "v2.1.3"
+        out-file-path: "./"
+        extract: true
+
     - name: Move Res and Deps to install
       run: |
         mkdir install
@@ -89,6 +98,10 @@ jobs:
         move .\config .\install
         cp .\README.md .\install
         cp .\LICENSE .\install
+
+        move .\bin\* .\install\res
+        move .\share\MaaAgentBinary .\install\res
+        del .\install\res\MaaPiCli.exe
 
     - name: Set up Python
       uses: actions/setup-python@v5.2.0
@@ -199,7 +212,7 @@ jobs:
       with:
         repository: MaaXYZ/MaaFramework
         fileName: "MAA-macos-${{ matrix.arch }}*"
-        tag: "v2.1.3
+        tag: "v2.1.3"
         out-file-path: "./"
         extract: true
 
