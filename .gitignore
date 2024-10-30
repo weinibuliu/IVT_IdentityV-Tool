@@ -1,2 +1,6 @@
 #屏蔽日志
 *.log
+*.spec
+build/
+dist/
+cache/
