@@ -279,9 +279,7 @@ class Fight(CustomAction):
                             context.override_pipeline(
                                 {
                                     "fight_点赞": {
-                                        "custom_action_param": {
-                                            "model_detail": model_detail
-                                        }
+                                        "custom_action_param": {"model_detail": model}
                                     }
                                 }
                             )
