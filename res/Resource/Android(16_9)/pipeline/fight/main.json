@@ -14,30 +14,50 @@
         ]
     },
     "fight_登录后界面检测成功": {
-        "recognition": "TemplateMatch",
-        "template": "fight//点击书.png",
+        "recognition": "ColorMatch",
+        "upper": [
+            170,
+            150,
+            120
+        ],
+        "lower": [
+            70,
+            40,
+            40
+        ],
         "roi": [
             1175,
             490,
             60,
             50
         ],
-        "threshold": 0.95,
+        "count": 10,
+        "connected": true,
         "next": [
             "fight_start"
         ]
     },
     "fight_返回大厅界面检测成功_仅检测": {
-        "recognition": "TemplateMatch",
-        "template": "fight//点击书.png",
+        "recognition": "ColorMatch",
+        "upper": [
+            170,
+            150,
+            120
+        ],
+        "lower": [
+            70,
+            40,
+            40
+        ],
         "roi": [
             1175,
             490,
             60,
             50
         ],
-        "threshold": 0.95,
-        "next": []
+        "count": 10,
+        "connected": true,
+        "threshold": 0.95
     },
     "fight_start": {
         "action": "Custom",
@@ -145,14 +165,25 @@
         "target": true
     },
     "fight_点击书": {
-        "recognition": "TemplateMatch",
-        "template": "fight//点击书.png",
+        "recognition": "ColorMatch",
+        "upper": [
+            170,
+            150,
+            120
+        ],
+        "lower": [
+            70,
+            40,
+            40
+        ],
         "roi": [
             1175,
             490,
             60,
             50
         ],
+        "count": 10,
+        "connected": true,
         "action": "Click",
         "target": true
     },

@@ -81,14 +81,25 @@
         ]
     },
     "检测是否进入游戏": {
-        "recognition": "TemplateMatch",
-        "template": "fight//点击书.png",
+        "recognition": "ColorMatch",
+        "upper": [
+            170,
+            150,
+            120
+        ],
+        "lower": [
+            70,
+            40,
+            40
+        ],
         "roi": [
             1175,
             490,
             60,
             50
         ],
+        "count": 10,
+        "connected": true,
         "inverse": true,
         "next": [
             "匹配成功_桌面通知"

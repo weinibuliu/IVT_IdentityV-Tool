@@ -101,7 +101,6 @@ jobs:
 
         move .\bin\* .\install\res
         move .\share\MaaAgentBinary .\install\res
-        del .\install\res\MaaPiCli.exe
 
     - name: Set up Python
       uses: actions/setup-python@v5.2.0

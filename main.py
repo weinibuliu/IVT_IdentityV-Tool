@@ -4,8 +4,6 @@
 from pathlib import Path
 from maa.toolkit import Toolkit
 
-import maa
-
 import src.ban as ban
 import src.notice as notice
 import src.fight as fight
