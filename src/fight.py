@@ -261,12 +261,12 @@ class Fight(CustomAction):
                             limit_time = False
                             break
                         if model == "匹配模式" or model == "排位模式":
-                            model = "标准模式"
+                            model_type = "标准模式"
 
                         context.override_pipeline(
                             {
                                 "fight_等待全体玩家准备": {
-                                    "next": [f"fight_{model}_等待加载"]
+                                    "next": [f"fight_{model_type}_等待加载"]
                                 }
                             }
                         )
@@ -279,7 +279,9 @@ class Fight(CustomAction):
                             context.override_pipeline(
                                 {
                                     "fight_点赞": {
-                                        "custom_action_param": {"model_detail": model}
+                                        "custom_action_param": {
+                                            "model_detail": model_type
+                                        }
                                     }
                                 }
                             )
