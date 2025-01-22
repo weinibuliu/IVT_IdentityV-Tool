@@ -16,11 +16,6 @@
 
 - **IVT 将保持开源与免费。任何人都可以在遵守 [GPL-3.0](#许可证) 许可证的前提下自由使用 IVT 。**
 
->[!NOTE]
-**项目正处于 *早期测试* 阶段。项目稳定性与可靠性有待具体测试。**\
-**如您在使用过程中遇到问题，欢迎向我们反馈，非常感谢。**\
-**已测试平台： Windows(x86_64)**
-
 ## 支持功能
 <details>
 <summary>点击查看</summary>
@@ -46,42 +41,12 @@
 
 </details>
 
-## 更新计划
-<details>
-<summary>点击查看</summary>
-
-- **自动战斗（锐意开发中）**
-  - [x] 歌剧演员 **(Beta)**
-  - [ ] 愚人金
-  - [x] 娱乐模式 捉迷藏 **(Beta)**
-- **日常清理**
-  - [ ] 领取日常奖励
-  - [ ] 领取邮件
-  - [ ] 协会签到
-- **角色日活动**
-  - [ ] 角色日活动通知
-- **IVT 本体**
-  - [ ] 完善 文件校验机制
-  - [ ] 提供 GUI
-
-</details>
-
-## 联系我们
-- **在本仓库中提 issue（强烈推荐！！！）**
-- **QQ群 995755294**\
-  (进群答案为本仓库地址，即 `github.com/weinibuliu/IVT_IdentityV-Tool` )
-- **邮箱** `weinibuliu@outlook.com`
-
 ## 支持我们
 - 如果觉得项目有帮助，欢迎为本项目点亮 **Star** ，这是对我们最大的鼓励。
-- 欢迎向本项目提交 **PR** ！ ~~（虽然我可能看不懂orz）~~ 详阅 **[开发文档](docs/zh-cn/Bulid/开发文档.md)** 。
-- 项目目前正在计划使用 PyQt6 开发 GUI，如您愿意提供帮助，欢迎 **[联系我们](#联系我们) 。**
+- 欢迎向本项目提交 **PR** ！ ~~（虽然我可能看不懂orz）~~
 
 ## 许可证
 **IVT 使用 [GPL-3.0](./LICENSE) 许可证进行开源。**
-> [!WARNING]
-**本项目 Logo 并非使用 GPL 3.0 协议开源。由画师保留所有权利。**\
-**不得在未经授权的情况下以 GPL 3.0 协议已授权为由使用本项目 Logo，不得在未经授权的情况下将本项目 Logo 用于任何商业用途。**
 
 ## 鸣谢
 ### 开源项目
@@ -92,13 +57,10 @@
   a platform-independent Python API for accessing hardware features of various platforms (Android, iOS, macOS, Linux and Windows).
 
 - **[pyinstaller](https://github.com/pyinstaller/pyinstaller)**\
-  bundles a Python application and all its dependencies into a single package. 
+  bundles a Python application and all its dependencies into a single package.
 
 ### 开发者
 感谢所有为 **IVT** 做出贡献的开发者：\
 <a href="https://github.com/weinibuliu/IVT_IdentityV-Tool/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=weinibuliu/IVT_IdentityV-Tool&max=1000" />
 </a>
-
-### 项目 Logo 绘制
-（待补充）
